@@ -65,55 +65,12 @@ enum sio_parity
 #define SIO_BPSV		*((volatile unsigned short*)0x1F80105E)
 
 
-/**
- * Initialize SIO communication at the specified bitrate (baud rate).
- * Mode is 8N1. (Data Length = 8 bit, No parity, Stop bit Length = 1 bit)
- * @param bitrate Bitrate (baud rate)
- */
-void SIOStart(int bitrate);
-
-/**
- * Same as SIOStart() but with more control.
- * IMPORTANT: Must use defined macros.
- * For example setting datalength to 5 should be done with "SIO_DATA_LEN_5"
- * and not by simply passing 5 as an argument.
- *
- * @param bitrate Bit rate (baud rate)
- * @param datalength Character (data) length
- * @param parity Parity
- * @param stopbit Stop bit length
- */
-void SIOStartEx(int bitrate, int datalength, int parity, int stopbit);
-
-/**
- * Shuts down SIO communication.
- */
 void SIOStop(void);
 
-/**
- * Read a single byte from the input buffer.
- * @return Data byte from input buffer
- */
+
 unsigned char SIOReadByte(void);
-
-/**
- * Send a single byte to the output buffer.
- * @param data Byte to send
- */
 void SIOSendByte(unsigned char data);
-
-/**
- * Check if any data is waiting in the input buffer.
- * Must be used when fetching data otherwise incorrect data could be read (usually 0x00).
- * @return Non-zero if there is data waiting in the input buffer, zero otherwise.
- */
 int SIOCheckInBuffer(void);
-
-/**
- * Check if port is ready to send data (previous operation finished).
- * Must be used when sending data as the output buffer is only 2 bytes long.
- * @return Non-zero if port is ready to send data, zero otherwise.
- */
 int SIOCheckOutBuffer(void);
 unsigned short SIOSTATUS(void);
 void SIOtest(void);
